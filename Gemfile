@@ -36,7 +36,6 @@ gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
-
 gem 'devise'
 
 group :development, :test do
@@ -44,8 +43,8 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'capybara', '>= 2.15'
   gem 'factory_bot_rails'
-  gem 'rspec-rails'
   gem 'rspec'
+  gem 'rspec-rails'
   gem 'selenium-webdriver'
 end
 
@@ -53,7 +52,6 @@ group :test do
   gem 'database_cleaner', '~> 1.8', '>= 1.8.5'
   gem 'shoulda-callback-matchers', '~> 1.1.1'
   gem 'shoulda-matchers', '~> 4.0'
-
   gem 'webdrivers'
 end
 
