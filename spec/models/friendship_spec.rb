@@ -8,7 +8,7 @@ RSpec.describe Friendship, type: :model do
   end
 
   context 'ActiveRecord associations' do
-    it 'belongs to Event' do
+    it 'belongs to friend' do
       expect(Friendship.reflect_on_association(:friend).macro).to be(:belongs_to)
     end
   end
