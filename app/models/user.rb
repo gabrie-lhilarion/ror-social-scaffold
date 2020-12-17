@@ -46,8 +46,8 @@ class User < ApplicationRecord
     friendship2.user_id = id
     friendship2.friend_id = user.id
     friendship2.status = true
-    friendship.status = true
-    friendship.save
+    #friendship.status = true
+    #friendship.save
     friendship2.save
   end
 

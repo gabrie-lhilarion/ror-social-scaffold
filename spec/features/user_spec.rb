@@ -1,60 +1,60 @@
 require 'rails_helper'
 
-RSpec.describe 'Testing Friendship features', type: :feature, feature: true do
+require 'rails_helper'
+
+RSpec.describe 'Friendship', type: :feature, feature: true do
   context 'context' do
     before do
-      @gabriel = User.create(email: 'gabriel@gmail.com', name: 'gabriel', password: '123456')
-      @ijeoma = User.create(email: 'ijeoma@gmail.com', name: 'ijeoma', password: '123456')
+      @user = User.create(email: 'mail@mail.com', name: 'Tester', password: '123456')
+      @user2 = User.create(email: 'mail2@mail.com', name: 'Tester2', password: '123456')
       visit 'http://localhost:3000/users/sign_in'
-      fill_in 'Email', with: 'gabriel@gmail.com'
+      fill_in 'Email', with: 'mail@mail.com'
       fill_in 'Password', with: '123456'
       click_on 'Log in'
     end
-    scenario 'Test if the user gabriel@gmail.com can log in' do
+
+    scenario 'log_in valid' do
       expect(page).to have_content('Signed in successfully.')
     end
-    scenario 'Create a friend request, Gabriel invites Ijeoma, check if a Pending request exist' do
-      url = 'http://localhost:3000/users/'
-      url.concat(@gabriel.id.to_s)
-      page.driver.submit :post, url, {}
-      expect(page).to have_content('Pending request')
-      expect(@gabriel.pending_friends).to include @ijeoma
+
+    scenario 'friend request' do
+      visit 'http://localhost:3000/users'
+      url = 'http://localhost:3000/request/'
+      url.concat(@user2.id.to_s)
+      visit url
+      expect(@user.pending_requests).to include(@user2)
+      expect(page).to have_content('Friend request sent')
     end
-    scenario 'Friend accept, Yaser invites Hans, Hans accepts the invitation' do
-      # request
-      url = 'http://localhost:3000/users/'
-      url.concat(@gabriel.id.to_s)
-      page.driver.submit :post, url, {}
-      expect(@hans.pending_friends).to include @gabriel
+  
+    scenario 'friend accept' do
       click_on 'Sign out'
-      # Accept
       visit 'http://localhost:3000/users/sign_in'
-      fill_in 'Email', with: 'gabriel@gmail.com'
+      fill_in 'Email', with: 'mail2@mail.com'
       fill_in 'Password', with: '123456'
       click_on 'Log in'
-      visit 'http://localhost:3000/users'
-      url = 'http://localhost:3000/users/'
-      url.concat(@ijeoma.id.to_s)
-      page.driver.submit :patch, url, {}
+      #visit 'http://localhost:3000/users'
+      url = 'http://localhost:3000/friendships/'
+      url.concat(@user.id.to_s)
+      page.driver.submit :get, url, {}
       expect(page).to have_content('You accept an Invitation')
     end
-    scenario 'Friend reject, Gabriel invites, Ijeoma rejects the invitation' do
-      # request
-      url = 'http://localhost:3000/users/'
-      url.concat(@gabriel.id.to_s)
-      page.driver.submit :post, url, {}
-      expect(@ijeoma.pending_friends).to include @gabriel
-      # Reject
+
+    scenario 'friend reject' do
+      visit 'http://localhost:3000/users'
+      url = 'http://localhost:3000/friendships/'
+      url.concat(@user2.id.to_s)
+      visit url
       click_on 'Sign out'
       visit 'http://localhost:3000/users/sign_in'
-      fill_in 'Email', with: 'gabriel@gmail.com'
+      fill_in 'Email', with: 'mail2@mail.com'
       fill_in 'Password', with: '123456'
       click_on 'Log in'
       visit 'http://localhost:3000/users'
-      url = 'http://localhost:3000/friendships/'
-      url.concat(@ijeoma.id.to_s)
-      page.driver.submit :delete, url, {}
+      url = 'http://localhost:3000/reject/'
+      url.concat(@user.id.to_s)
+      page.driver.submit :get, url, {}
       expect(page).to have_content('You reject an Invitation')
     end
+ 
   end
 end
