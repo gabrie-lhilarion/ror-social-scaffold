@@ -2,14 +2,15 @@
 require 'rails_helper'
 
 RSpec.describe Like, type: :model do
-  context 'Validation uniqueness' do
-    it {
-      expect(subject).to validate_uniqueness_of(:user_id).scoped_to(:post_id)
-    }
+  context 'ActiveRecord associations' do
+    it 'belongs to User' do
+      expect(Like.reflect_on_association(:user).macro).to be(:belongs_to)
+    end
   end
 
-  context 'Likes Associations, with user and post' do
-    it { expect(subject).to belong_to(:user) }
-    it { expect(subject).to belong_to(:post) }
+  context 'ActiveRecord associations' do
+    it 'belongs to friend' do
+      expect(Like.reflect_on_association(:post).macro).to be(:belongs_to)
+    end
   end
 end
