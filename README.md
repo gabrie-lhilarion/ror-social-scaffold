@@ -9,7 +9,6 @@
 
 ## Live Demo
 https://vast-sierra-33166.herokuapp.com/
-TBA
 
 
 ## Getting Started
