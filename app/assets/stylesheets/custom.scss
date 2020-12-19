@@ -14,7 +14,7 @@ $divider-color: #bdbdbd;
 }
 
 body {
-  background: #fff;
+  background: #f0f2f5;
   position: relative;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
@@ -33,6 +33,21 @@ ul {
 a {
   text-decoration: none;
   color: $primary-color-text;
+}
+
+.users_name {
+  text-transform: capitalize;
+  padding-left: 5px;
+  flex-grow: 1;
+
+  a {
+    color: #fff;
+    background-color: #5aa469;
+    font-size: 0.7em;
+    display: inline-block;
+    padding: 1px 3px;
+    border-radius: 3px;
+  }
 }
 
 .nav {
@@ -67,11 +82,64 @@ a {
   }
 }
 
-.main {
+#middle h1 {
+  border-bottom: none;
+}
+
+.invite-link {
+  background-color: #f8d49d;
+  padding: 1px 5px;
+  color: #666;
+}
+
+.sent-request {
+  background-color: #bedcfa;
+  color: #666;
+  border: none;
+  padding: 1px 5px;
+  font-size: 1em;
+}
+
+.accept-link {
+  background-color: #5aa469;
+  padding: 1px 5px;
+  display: inline-block;
+  color: #f9f9f9;
+  margin-left: 6px;
+}
+
+.reject-link {
+  padding: 1px 5px;
+  background-color: rgb(233, 15, 80);
+  display: inline-block;
+  color: #f9f9f9;
+}
+
+.users-list {
+  padding-top: 6px;
+  border-top: solid 1px #ccc;
+  height: 60px;
+  box-sizing: border-box;
+}
+
+.flex-wrap {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  padding: 16px;
+  justify-content: space-between;
+}
+
+.rounded {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #ccc;
+}
+
+.profile-link {
+  flex-grow: 3;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .notice,
@@ -136,60 +204,6 @@ a {
   }
 }
 
-form {
-  width: 80%;
-  margin: 8px 0;
-
-  .field {
-    width: 100%;
-    padding: 8px 0;
-
-    label {
-      margin-bottom: 8px;
-    }
-
-    input {
-      width: 100%;
-      border: 1px solid $divider-color;
-      border-radius: 4px;
-      padding: 8px;
-      background-color: $primary-color-light;
-    }
-
-    input[type="checkbox"] {
-      width: fit-content;
-    }
-  }
-
-  .actions {
-    display: flex;
-    justify-content: center;
-    margin: 8px 0;
-  }
-
-  input[type="submit"] {
-    padding: 8px;
-    width: 50%;
-    border: none;
-    border-radius: 4px;
-    background-color: $primary-color-dark;
-    color: $primary-color-light;
-    text-transform: uppercase;
-    font-weight: 900;
-  }
-
-  input[type="submit"]:hover {
-    background-color: $primary-color;
-    color: #fff;
-  }
-
-  .actions.reset {
-    input[type="submit"] {
-      width: 100%;
-    }
-  }
-}
-
 .title {
   text-align: center;
   margin-bottom: 16px;
@@ -197,11 +211,11 @@ form {
 }
 
 .timeline {
-  width: 100%;
-  margin: 16px 0;
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: auto;
 
   h3 {
     margin: 8px 0;
@@ -209,13 +223,19 @@ form {
 
   .posts {
     width: 100%;
+    border-top: solid 1px #ddd;
   }
 
   .post {
+    background-color: #fff;
     width: 100%;
-    margin: 16px 0;
+    margin: 30px auto;
     display: flex;
     flex-direction: column;
+    border: solid 1px #ddd;
+    border-radius: 5px;
+    padding: 4px;
+    box-shadow: 0 1px 3px #ddd;
   }
 
   .post-attribution {
@@ -245,7 +265,7 @@ form {
 
   .post-content {
     font-size: 1.1em;
-    padding: 4px 0;
+    padding: 4px;
   }
 
   .post-comments-section {
@@ -277,7 +297,6 @@ form {
 
 .users-section {
   width: 100%;
-  margin: 10px;
 
   .users-list li {
     margin-bottom: 16px;
@@ -288,13 +307,11 @@ form {
   .profile-link {
     font-size: 0.8em;
     margin: 0 0 8px 0;
-    color: $primary-color-dark;
   }
 }
 
 .user-section {
   width: 100%;
-  margin-left: 16px;
 
   h2 {
     text-transform: capitalize;
@@ -322,28 +339,176 @@ form {
   }
 }
 
-@media only screen and (min-width: 480px) {
-  form {
-    width: 60%;
-  }
+@media (max-width: 700px) {
+  .main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
 
-  .new_post,
-  .timeline,
-  .users-section,
-  .user-section {
-    width: 70%;
+    form {
+      width: 90%;
+      margin: auto;
+
+      .field {
+        width: 100%;
+        padding: 8px 0;
+
+        label {
+          margin-bottom: 8px;
+        }
+
+        input {
+          width: 100%;
+          border: 1px solid $divider-color;
+          border-radius: 4px;
+          padding: 8px;
+          background-color: $primary-color-light;
+        }
+
+        input[type=hidden],
+        input[type=checkbox] {
+          width: 45px;
+          display: inline;
+        }
+      }
+
+      .actions {
+        display: flex;
+        justify-content: center;
+        margin: 8px 0;
+      }
+
+      input[type="submit"] {
+        padding: 8px;
+        width: 50%;
+        border: none;
+        border-radius: 4px;
+        background-color: $primary-color-dark;
+        color: $primary-color-light;
+        text-transform: uppercase;
+        font-weight: 900;
+      }
+
+      input[type="submit"]:hover {
+        background-color: $primary-color;
+        color: #fff;
+      }
+
+      .actions.reset {
+        input[type="submit"] {
+          width: 100%;
+        }
+      }
+    }
+
+    #sign-in {
+      width: 100%;
+      height: auto;
+      margin: auto;
+      background-color: beige;
+    }
   }
 }
 
-@media (min-width: 780px) {
+@media (min-width: 680px) {
   form {
-    width: 40%;
+    width: 100%;
   }
 
   .new_post,
   .timeline,
   .users-section,
   .user-section {
-    width: 50%;
+    width: 100%;
+  }
+
+  .main {
+    display: flex;
+    flex-direction: row;
+    padding: 16px;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    #left,
+    #right {
+      width: 30%;
+      padding: 1px 20px;
+    }
+
+    .dp-image {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      background-color: #ccc;
+    }
+
+    #middle {
+      width: 40%;
+    }
+
+    form {
+      width: 100%;
+      margin: auto;
+
+      .field {
+        width: 100%;
+        padding: 8px 0;
+
+        label {
+          margin-bottom: 8px;
+        }
+
+        input {
+          width: 100%;
+          border: 1px solid $divider-color;
+          border-radius: 4px;
+          padding: 8px;
+          background-color: $primary-color-light;
+        }
+
+        input[type=hidden],
+        input[type=checkbox] {
+          width: 45px;
+          display: inline;
+        }
+      }
+
+      .actions {
+        display: flex;
+        justify-content: center;
+        margin: 8px 0;
+      }
+
+      input[type="submit"] {
+        padding: 8px;
+        width: 50%;
+        border: none;
+        border-radius: 4px;
+        background-color: $primary-color-dark;
+        color: $primary-color-light;
+        text-transform: uppercase;
+        font-weight: 900;
+        margin: auto;
+      }
+
+      input[type="submit"]:hover {
+        background-color: $primary-color;
+        color: #fff;
+      }
+
+      .actions.reset {
+        input[type="submit"] {
+          width: 100%;
+        }
+      }
+    }
+
+    #sign-in {
+      width: 40%;
+      height: auto;
+      margin: auto;
+      background-color: beige;
+    }
   }
 }

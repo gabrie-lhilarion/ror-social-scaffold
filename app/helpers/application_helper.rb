@@ -15,4 +15,20 @@ module ApplicationHelper
       link_to('Like!', post_likes_path(post_id: post.id), method: :post)
     end
   end
+
+  def friendship_status_link(user)
+    if current_user.friends.include?(user)
+      '&#128101 Already friends'.html_safe
+    elsif current_user.recieved_requests.include?(user)
+      "<span> request recieved <br/></span> \n
+      #{link_to 'Reject', reject_request_path(user), class: 'reject-link'}
+      #{link_to 'Accept', accept_friend_path(user), class: 'accept-link'} ".html_safe
+    elsif current_user.sent_requests.include?(user)
+      '<button class="sent-request">Friend request sent</button>'.html_safe
+    else
+      unless current_user.relation_exist?(user)
+        (link_to 'Invite to friendship', friend_request_path(user), class: 'invite-link')
+      end
+    end
+  end
 end
