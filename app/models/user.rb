@@ -13,7 +13,7 @@ class User < ApplicationRecord
   has_many :friendships
   has_many :inverse_friendships, class_name: 'Friendship', foreign_key: 'friend_id'
 
-  has_many :pending_friendships, -> { where status: nil }, class_name: 'Friendship', foreign_key: 'user_id'
+  has_many :pending_friendships, -> { where status: false }, class_name: 'Friendship', foreign_key: 'user_id'
   has_many :pending_requests, through: :pending_friendships, source: :friend
 
   def friends
@@ -36,7 +36,6 @@ class User < ApplicationRecord
     friendship = friendships.build
     friendship.friend_id = user.id
     friendship.user_id = current_user.id
-    friendship.status = false
     friendship.save
   end
 
@@ -46,7 +45,7 @@ class User < ApplicationRecord
     friendship2.user_id = id
     friendship2.friend_id = user.id
     friendship2.status = true
-    friendship&.status
+    friendship&.status = true
     friendship&.save
     friendship2.save
   end
